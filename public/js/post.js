@@ -160,6 +160,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     };
                 }
 
+                if(this.status == 404) {
+                    message.style.display = "block"
+                    message.classList.add("alert-danger")
+                    message.innerText = requestResponse["message"]
+                    return;
+                }
+
                 if(this.status == 400) {
                     message.style.display = "block"
                     message.classList.add("alert-danger")

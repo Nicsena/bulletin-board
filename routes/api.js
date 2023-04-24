@@ -189,6 +189,14 @@ router.post("/create/reply", async (req, res) => {
     };
 
     var post = await posts.findOne({_id: postId})
+
+    if(!post) {
+        return res.status(404).json({
+            error: true,
+            message: "Post doesn't exist"
+        });
+    }
+
     if(post["readonly"] === "true") {
         return res.status(400).json({
             error: true,
@@ -220,6 +228,14 @@ router.post("/create/reply", async (req, res) => {
             })
         })
     };
+
+});
+
+router.get("*", async (req, res) => {
+
+    return res.status(404).json({
+        message: "Endpoint Not Found"
+    })
 
 });
 
