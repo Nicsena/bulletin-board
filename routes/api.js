@@ -137,7 +137,7 @@ router.post('/create', async (req, res) => {
 
     if(title && content) {
         let postsCount = await posts.countDocuments();
-        let date = new Date().toLocaleString()
+        let date = new Date().toISOString()
 
         await posts.create({
             _id: postsCount,
@@ -199,7 +199,7 @@ router.post("/create/reply", async (req, res) => {
     var repliesCount = await replies.countDocuments({ server: false });
 
     if(content && postId) {
-        let date = new Date().toLocaleString()
+        let date = new Date().toISOString()
 
         await replies.create({
             _id: repliesCount,
