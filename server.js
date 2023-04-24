@@ -79,7 +79,7 @@ app.all("*", async (req, res, next) => {
     var UserAgent = req.get('User-Agent')
     var Path = req.path
     var Method = req.method
-    var Referer = req.headers["referer"] || "No Referer"
+    var Referer = (req.headers["referer"] || "").split('/')[2] || "No Referer"
     var serverConfig = (await config.find({_id: 0}))[0]
 
     console.log(`${timestring} - ${IP} - ${Method} - ${Path} - ${UserAgent} - ${Referer}`);
