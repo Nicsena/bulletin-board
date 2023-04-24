@@ -7,6 +7,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser')
 const { posts, replies, config } = require("./models")
 const init = require("./src/init");
+const protection = require("./src/protection");
 const moment = require("moment")
 
 var persistent = process.env.PERSISTENT || true
@@ -71,6 +72,72 @@ app.use(express.static('public'));
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, 'public'));
 app.enable("trust proxy");
+
+app.all("*", async (req, res, next) => {
+    var IP = req.ip;
+    var timestring = new Date().toLocaleString()
+    var UserAgent = req.get('User-Agent')
+    var Path = req.path
+    var Method = req.method
+    var Referer = req.headers["referer"] || "No Referer"
+    var serverConfig = (await config.find({_id: 0}))[0]
+
+    console.log(`${timestring} - ${IP} - ${Method} - ${Path} - ${UserAgent} - ${Referer}`);
+
+    var alwaysAllowedIPs = [
+        "::1",
+        "127.0.0.1",
+        "::ffff:127.0.0.1"
+    ]
+
+    if(serverConfig["refererProtection"] === "true") {
+
+    if(Referer) {
+        if(serverConfig["refererProtectionBlock"] === "true") {
+                if(!alwaysAllowedIPs.includes(IP)) {
+                    console.log(`${timestring} - Referer: ${Referer} - Not Allowed`)
+                    return res.status(403).json({
+                        message: "Forbidden"
+                    });
+                };
+        };
+
+        var listStatus = await protection.check("referer", Referer);
+        if(listStatus === "referer allowed") console.log(`${timestring} - Referer: ${Referer} - Allowed`)
+        if(listStatus === "referer blocked") {
+            console.log(`${timestring} - Referer: ${Referer} - Not Allowed`)
+            return res.status(403).json({
+                message: "Forbidden"
+            });
+        }
+    };
+    };
+    
+    if(serverConfig["ipProtection"] === "true") {
+        if(IP) {
+            if(serverConfig["ipProtectionBlock"] === "true") {
+                if(!alwaysAllowedIPs.includes(IP)) {
+                console.log(`${timestring} - IP: ${IP} - Not Allowed`)
+                return res.status(403).json({
+                    message: "Forbidden"
+                });
+            }
+            };
+
+            var listStatus = await protection.check("ip", IP);
+            if(listStatus === "ip allowed") return next();
+            if(listStatus === "ip blocked") {
+                console.log(`${timestring} - IP: ${IP} - Not Allowed`)
+                return res.status(403).json({
+                    message: "Forbidden"
+                });
+            };
+    };
+    };
+
+    next();
+
+});
 
 app.get("/", (req, res) => {
     res.status(200).render(__dirname + "/views/index.ejs", { title: appTitle })

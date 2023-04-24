@@ -2,8 +2,23 @@ const mongoose = require("mongoose");
 
 const configSchema = new mongoose.Schema({
     _id: { type: Number, required: false },
-    readonly: { type: String, required: false }
+    readonly: { type: String, required: false, default: false },
+    refererProtection: { type: String, required: false, default: true },
+    refererProtectionBlock: { type: String, required: false, default: false },
+    ipProtection: { type: String, required: false, default: true },
+    ipProtectionBlock: { type: String, required: false, default: false }
 })
+
+const ipSchema = new mongoose.Schema({
+    ip: { type: String, required: true },
+    status: { type: String, required: true }
+})
+
+const refererSchema = new mongoose.Schema({
+    referer: { type: String, required: true },
+    status: { type: String, required: true }
+})
+
 
 const postSchema = new mongoose.Schema({
     _id: { type: String, required: true },
@@ -26,6 +41,8 @@ const postReplySchema = new mongoose.Schema({
 })
 
 module.exports = {
+    ipList: mongoose.model("Bips", ipSchema),
+    referersList: mongoose.model("Breferers", refererSchema),
     config: mongoose.model("Bconfig", configSchema),
     posts: mongoose.model("Bposts", postSchema),
     replies: mongoose.model("Bpostreplies", postReplySchema)
