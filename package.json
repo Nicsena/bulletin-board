@@ -16,6 +16,9 @@
   "bugs": {
     "url": "https://github.com/nicsena/bulletin-board/issues"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "homepage": "https://github.com/nicsena/bulletin-board#readme",
   "dependencies": {
     "cookie-parser": "^1.4.6",
