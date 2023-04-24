@@ -1,0 +1,30 @@
+GET http://127.0.0.1:3000/api/post/0
+
+###
+
+GET http://127.0.0.1:3000/api/replies/0
+
+###
+
+POST http://127.0.0.1:3000/api/create
+Content-Type: application/json
+
+{
+    "title": "Test Post",
+    "body": "Test"
+}
+
+###
+
+GET http://127.0.0.1:3000/api/reply/0
+
+###
+
+POST http://127.0.0.1:3000/api/create/reply
+Content-Type: application/json
+
+{
+    "poster": "Test",
+    "content": "Test Reply",
+    "postId": "0"
+}

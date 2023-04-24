@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<%- include("./partial/header.ejs") %>
+<script src="/js/post.js"></script>
+</head>
+
+<body>
+
+<%- include("./partial/navbar.ejs") %>
+
+<div id="container" class="container-fluid p-3 my-3 rounded">
+
+<% if(post) { %>
+
+    <!-- Post -->
+    <div id="post" class="container-fluid p-0 my-0 rounded">
+        <p class="h3"> <%= post["title"] %> </p>
+        <p class="h6"> <%= post["createdAt"] %> <% if(post["server"] === "true") { %>| Server <% } %> </p>
+        <div>
+        <pre class="h5" style="margin-top: 20px; margin-bottom: 20px;"><%= post["content"] %></pre>
+        </div>
+    </div>
+
+    <button id="ReplyBtn" type="submit" class="btn btn-dark mb-2 text-center">Reply to Post</button>
+
+    <!-- Reply Form -->
+    <form class="rounded p-1 my-3" style="display: none" id="reply-form">
+        <div class="alert text-center" id="message" style="display: inherit; text-overflow: wrap; margin-bottom: 5px;"></div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="username" value="" placeholder="username (optional)">
+        </div>
+        <div class="form-group">
+            <textarea type="text" name="description"  class="form-control" id="description" placeholder="Enter text here"></textarea>
+        </div>
+        <button id="PostReplyBtn" type="submit" class="btn btn-dark btn-block mb-2">
+          <span id="spinner" class="" style="visibility: inherit;" role="status" aria-hidden="true"></span>
+          Post Reply
+        </button>
+      </form> 
+
+    <!-- Replies -->
+    <div id="replies" class="container-fluid p-3 my-3 mt-20 rounded">
+
+    <p class="h4 text-center">Replies:</p>
+
+    <% if(!replies.length) { %>
+        <p class="h5 text-center">There are no replies for this post.</p>
+    <% } %>
+
+    <% if(replies) { %>
+        <% replies.forEach(r => { %>
+        <a href="<%= r["link"] %>" id="reply-<%= r["postId"] %>-<%= r["id"] %>" class="card" style="margin-top: 5px; margin-bottom: 5px;"> 
+          <div class="card-body reply rounded"> 
+              <p class="h4"> <%= r["poster"] %> </p>
+              <p class="h6"> <%= r["createdAt"] %> | ID: <%= r["id"] %> <% if(r["server"] === "true") { %>| Server <% } %></p>
+              <p class="h6"> <pre><%= r["content"] %></pre>  </p>
+          </div> 
+        </a>
+        <% }) %>
+      <% } %>
+
+<% } %>
+</div>
+
+<%- include('./partial/footer.ejs') %>
+
+</div>
+
+
+
+
+
+</body>
+
+</html>

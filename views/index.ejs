@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<%- include("./partial/header.ejs") %>
+</head>
+
+<body>
+
+<%- include("./partial/navbar.ejs") %>
+
+<div id="container" class="container-fluid p-3 my-3 rounded">
+
+<p class="h2 text-center">Welcome!</p>
+<br>
+<p class="h4 text-center"><%= title %> is a open source bulletin board that doesn't need registration!</p>
+<br>
+<p class="h5 text-center">If you want to build your own <%= title %> client, see <a href="/bulletin_api">/bulletin_api</a> endpoint </p>
+<br>
+<p class="h5 text-center">The source code for <%= title %> is on <a href="https://github.com/nicsena/bulletin-board">GitHub</a> </p>
+<br>
+
+<%- include('./partial/footer.ejs') %>
+
+</div>
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+body, html {
+    color: #ffffff;
+    background-color: #121212!important;
+}
+
+.container-fluid {
+    color: #ffffff;
+}
+
+.container {
+    color: #ffffff;
+}
+
+#container pre {
+    color: #ffffff;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#container .card {
+    color: #ffffff;
+    background-color: #181818!important;
+    margin-bottom: 5px;
+}
+
+#container .card:hover {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+#container .card .reply {
+    color: #ffffff;
+    background-color: #181818!important;
+}
+
+#container .card .post {
+    color: #ffffff;
+    background-color: #181818!important;
+}
+
+/* Post Form */
+#container #PostBtn {
+    margin: auto;
+    display: block;
+}
+
+#container #post-form {
+    margin: auto;
+    max-width: 325px;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#container #post-form #description {
+    max-height: 175px;
+}
+
+
+
+/* Reply Form */
+#container #ReplyBtn {
+    margin: auto;
+    display: block;
+}
+
+#container #reply-form {
+    margin: auto;
+    max-width: 325px;
+    display: none;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#container #reply-form #description {
+    max-height: 175px;
+}
+
+
+/* Footer */
+footer {
+    color: #ffffff;
+}

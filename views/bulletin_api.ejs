@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<%- include("./partial/header.ejs") %>
+</head>
+
+<body>
+
+<%- include("./partial/navbar.ejs") %>
+
+<div id="container" class="container-fluid p-3 my-3 rounded">
+
+<p class="h2"><%= title %> API:</p>
+<p class="h5">A short documentation of <%= title %> API. The API can be used for creating your own <%= title %> client, and other things. The API responds in JSON format.</p>
+<br>
+
+<!-- API - Posts Endpoint -->
+<p class="h5"><u>/api/posts/</u></p>
+<p class="h6">Method: GET</p>
+<p class="h6">This endpoint shows all posts that ever got made.</p>
+<br>
+
+<!-- API - Post Endpoint -->
+<p class="h5"><u>/api/posts/${id}</u></p>
+<p class="h6">Method: GET</p>
+<p class="h6">This endpoint shows a specific post by using the post's ID. This doesn't show the replies of the post.</p>
+<br>
+
+<!-- API - Replies Endpoint -->
+<p class="h5"><u>/api/replies/${id}</u></p>
+<p class="h6">Method: GET</p>
+<p class="h6">This endpoint shows all replies for a specific post by using the post's ID.</p>
+<br>
+
+<!-- API - Reply Endpoint -->
+<p class="h5"><u>/api/reply/${id}</u></p>
+<p class="h6">Method: GET</p>
+<p class="h6">This endpoint shows a specific reply by using the reply's ID.</p>
+<br>
+
+<!-- API - New Post Endpoint -->
+<p class="h5"><u>/api/create/</u></p>
+<p class="h6">Method: POST</p>
+<p class="h6">Content Type: <code>application/json</code></p>
+<br>
+<p class="h6">This endpoint allows you to create a new post.</p>
+<br>
+<p class="h6">JSON Body:</p>
+<p class="h6"><code>{ <br>title: "Example",<br>body: "Example Body"<br> }</code></p>
+<br>
+
+
+<!-- API - New Reply Endpoint -->
+<p class="h5"><u>/api/create/reply</u></p>
+<p class="h6">Method: POST</p>
+<p class="h6">Content Type: <code>application/json</code></p>
+<br>
+<p class="h6">This endpoint allows you to create a new reply with a specific post's ID.</p>
+<br>
+<p class="h6">JSON Body:</p>
+<p class="h6"><code>{ <br>postId: "0",<br>content: "Example Reply"<br> }</code></p>
+<br>
+
+<br>
+
+<%- include('./partial/footer.ejs') %>
+
+</div>
+
+
+
+
+
+</body>
+
+</html>
