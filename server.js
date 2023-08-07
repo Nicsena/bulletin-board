@@ -5,9 +5,8 @@ const app = express();
 const rateLimit = require("express-rate-limit");
 const path = require('path');
 const cookieParser = require('cookie-parser')
-const { posts, replies, config } = require("./models")
+const { posts, replies } = require("./models")
 const init = require("./src/init");
-const protection = require("./src/protection");
 const moment = require("moment")
 
 var persistent = process.env.PERSISTENT || true
@@ -80,60 +79,8 @@ app.all("*", async (req, res, next) => {
     var Path = req.path
     var Method = req.method
     var Referer = (req.headers["referer"] || "").split('/')[2] || "No Referer"
-    var serverConfig = (await config.find({_id: 0}))[0]
 
     console.log(`${timestring} - ${IP} - ${Method} - ${Path} - ${UserAgent} - ${Referer}`);
-
-    var alwaysAllowedIPs = [
-        "::1",
-        "127.0.0.1",
-        "::ffff:127.0.0.1"
-    ]
-
-    if(serverConfig["refererProtection"] === "true") {
-
-    if(Referer) {
-        if(serverConfig["refererProtectionBlock"] === "true") {
-                if(!alwaysAllowedIPs.includes(IP)) {
-                    console.log(`${timestring} - Referer: ${Referer} - Not Allowed`)
-                    return res.status(403).json({
-                        message: "Forbidden"
-                    });
-                };
-        };
-
-        var listStatus = await protection.check("referer", Referer);
-        if(listStatus === "referer allowed") console.log(`${timestring} - Referer: ${Referer} - Allowed`)
-        if(listStatus === "referer blocked") {
-            console.log(`${timestring} - Referer: ${Referer} - Not Allowed`)
-            return res.status(403).json({
-                message: "Forbidden"
-            });
-        }
-    };
-    };
-    
-    if(serverConfig["ipProtection"] === "true") {
-        if(IP) {
-            if(serverConfig["ipProtectionBlock"] === "true") {
-                if(!alwaysAllowedIPs.includes(IP)) {
-                console.log(`${timestring} - IP: ${IP} - Not Allowed`)
-                return res.status(403).json({
-                    message: "Forbidden"
-                });
-            }
-            };
-
-            var listStatus = await protection.check("ip", IP);
-            if(listStatus === "ip allowed") return next();
-            if(listStatus === "ip blocked") {
-                console.log(`${timestring} - IP: ${IP} - Not Allowed`)
-                return res.status(403).json({
-                    message: "Forbidden"
-                });
-            };
-    };
-    };
 
     next();
 
@@ -235,5 +182,5 @@ app.get("*", async (req, res) => {
 
 app.listen(PORT, (err) => {
     if (err) console.error(err);
-    if (!err) console.log(`Server is now listening on :${PORT}`);
+    if (!err) console.log(`Server is now listening on ${PORT}`);
 })

@@ -11,11 +11,7 @@ if(!serverConfig) {
     console.log(`Database Init - Creating Server Configuration`)
     await config.create({
         _id: 0,
-        readonly: false,
-        ipProtection: true,
-        ipProtectionBlock: false,
-        refererProtection: true,
-        refererProtectionBlock: false,
+        readonly: false
     }).then(r => {
         console.log("Database Init - Added Server Configuration")
     }).catch(e => {
@@ -28,38 +24,6 @@ if(serverConfig) {
     if(!serverConfig["readonly"]) {
         await config.updateOne({_id: 0}, { readonly: false}).then(r => {
             console.log(`Database Init - Added readonly to Server Configuration`)
-        }).catch(e => {
-            console.log(e);
-        });
-    };
-
-    if(!serverConfig["ipProtection"]) {
-        await config.updateOne({_id: 0}, { ipProtection: true}).then(r => {
-            console.log(`Database Init - Added ipProtection to Server Configuration`)
-        }).catch(e => {
-            console.log(e);
-        });
-    };
-
-    if(!serverConfig["ipProtectionBlock"]) {
-        await config.updateOne({_id: 0}, { ipProtectionBlock: false}).then(r => {
-            console.log(`Database Init - Added ipProtectionBlock to Server Configuration`, r)
-        }).catch(e => {
-            console.log(e);
-        });
-    };
-
-    if(!serverConfig["refererProtection"]) {
-        await config.updateOne({_id: 0}, { refererProtection: true}).then(r => {
-            console.log(`Database Init - Added refererProtection to Server Configuration`)
-        }).catch(e => {
-            console.log(e);
-        });
-    };
-
-    if(!serverConfig["refererProtectionBlock"]) {
-        await config.updateOne({_id: 0}, { refererProtectionBlock: false}).then(r => {
-            console.log(`Database Init - Added refererProtectionBlock to Server Configuration`)
         }).catch(e => {
             console.log(e);
         });
